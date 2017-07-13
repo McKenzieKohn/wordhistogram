@@ -1,0 +1,13 @@
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+
+with open("C:/path/CSVfile.csv") as f:
+	lines = f.readlines()                                                                            
+text = "".join(lines)  
+
+cv = CountVectorizer(min_df=0)
+counts = cv.fit_transform([text]).toarray().ravel()                                                  
+words = np.array(cv.get_feature_names()) 
+hist=np.dstack((words,counts))
+
+np.savetxt('C:/path/wordhistogram.csv', (words,counts), fmt='%s', delimiter=",")
